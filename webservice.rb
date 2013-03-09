@@ -9,7 +9,7 @@ $logger = Logger.new "log/webservice.log"
 
 DataMapper::Logger.new("log/webservice.log", :debug)
 
-DataMapper.setup(:default, 'sqlite3:system/webservice.db')
+DataMapper.setup(:default, 'sqlite3:public/system/webservice.db')
 
 class Location
   include DataMapper::Resource
