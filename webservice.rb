@@ -1,5 +1,5 @@
 require 'sinatra'
-require 'datamapper'
+require 'data_mapper'
 require 'json'
 
 $logger = Logger.new "log/webservice.log"

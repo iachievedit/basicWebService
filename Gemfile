@@ -3,4 +3,4 @@ source "https://rubygems.org"
 gem "sinatra"
 gem "capistrano"
 
-gem "datamapper"
+gem "data_mapper"

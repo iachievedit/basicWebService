@@ -14,7 +14,7 @@ task :development do
   set :user, "webservice"
   set :use_sudo, false
   set :stage, "development"
-  set :branch, "master"
+  set :branch, "with_sqlite"
   set :deploy_to, "/web/apps/#{stage}/#{application}"
 end
 
