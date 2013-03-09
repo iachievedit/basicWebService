@@ -6,15 +6,15 @@ set :repository,  "git@github.com:iachievedit/basicWebService"
 set :scm, :git
 set :deploy_via, :remote_cache
 
-role :app, "192.168.0.114"
+role :app, "dev.iachieved.it"
 
 after "deploy:restart", "deploy:cleanup"
 
 task :development do
-  set :user, "webservice"
-  set :use_sudo, false
-  set :stage, "development"
-  set :branch, "with_sqlite"
+  set :user,      "webservice"
+  set :use_sudo,  false
+  set :stage,     "development"
+  set :branch,    "with_sqlite"
   set :deploy_to, "/web/apps/#{stage}/#{application}"
 end
 
