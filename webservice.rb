@@ -37,7 +37,7 @@ class Application < Sinatra::Base
                     :created_at => Time.now.to_s)
     $logger.debug "Well?"
     status 200
-    return {status:  "ok"}.to_json
+    return {:status =>  "ok"}.to_json
   end
   
 end
