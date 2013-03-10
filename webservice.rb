@@ -59,7 +59,7 @@ class Application < Sinatra::Base
     
     $logger.debug "#{event} geofence with center (#{latitude}, #{longitude}) radius #{radius}"
     
-    Location.create(:latitude   => latitude,
+    Geofence.create(:latitude   => latitude,
                     :longitude  => longitude,
                     :radius     => radius,
                     :event      => event,
