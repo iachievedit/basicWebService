@@ -34,6 +34,7 @@ end
 DataMapper.finalize
 
 Location.auto_upgrade!
+Geofence.auto_upgrade!
 
 class Application < Sinatra::Base
 
