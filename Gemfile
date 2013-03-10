@@ -4,7 +4,7 @@ gem "sinatra"
 gem "capistrano"
 
 gem "data_mapper"
-gem "dm-sqlite-adapter"
+gem "dm-mysql-adapter"
 
 group :test do
 gem "thin"

@@ -1,15 +1,21 @@
 require 'sinatra'
 require 'dm-core'
-require 'dm-sqlite-adapter'
+require 'dm-mysql-adapter'
 require 'dm-migrations'
 require 'json'
+require 'yaml'
 
 use Rack::Logger
 $logger = Logger.new "log/webservice.log"
 
 DataMapper::Logger.new("log/webservice.log", :debug)
 
-DataMapper.setup(:default, 'sqlite3:public/system/webservice.db')
+credentials = YAML.load_file('config/database.yml')
+username    = credentials["development"]["username"]
+password    = credentials["development"]["password"]
+hostname    = credentials["development"]["hostname"]
+
+DataMapper.setup(:default, 'mysql://#{username}:#{password}@#{hostname}/geofencing')
 
 class Location
   include DataMapper::Resource
