@@ -2,6 +2,7 @@ require 'sinatra'
 require 'dm-core'
 require 'dm-mysql-adapter'
 require 'dm-migrations'
+require 'dm-serializer/to_json'
 require 'json'
 require 'yaml'
 
