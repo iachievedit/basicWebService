@@ -38,6 +38,10 @@ Geofence.auto_upgrade!
 
 class Application < Sinatra::Base
 
+  before do
+    content_type 'application/json'
+  end
+
   post '/location' do
     latitude   = params[:latitude]
     longitude  = params[:longitude]
@@ -49,8 +53,8 @@ class Application < Sinatra::Base
                     :created_at => Time.now.to_s)
 
     status 200
-    content_type :json
     return {:status =>  "ok"}.to_json
+
   end
 
   post '/geofence' do
@@ -68,7 +72,7 @@ class Application < Sinatra::Base
                     :created_at => Time.now.to_s)
 
     status 200
-    content_type :json
+
     return {:status =>  "ok"}.to_json
   end
   
