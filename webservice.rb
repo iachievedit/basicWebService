@@ -84,15 +84,24 @@ class Application < Sinatra::Base
   end
 
   get '/locations' do
+
+    callback = params[:callback]; # JSONP
     
     locations = Location.all
 
     status 200
-    return {:locations => locations}.to_json
+    json = {:locations => locations}.to_json
+    
+    return "#{callback}(#{json});"
 
   end
 
   get '/geofences' do
+
+    geofences = Geofence.all
+
+    status 200
+    return {:geofences => geofences}.to_json
 
   end
   
