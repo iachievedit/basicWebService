@@ -54,6 +54,8 @@ class Application < Sinatra::Base
   post '/geofence' do
     latitude   = params[:latitude]
     longitude  = params[:longitude]
+    radius     = params[:radius]
+    event      = params[:event]
     
     $logger.debug "#{event} geofence with center (#{latitude}, #{longitude}) radius #{radius}"
     
