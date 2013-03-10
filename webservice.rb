@@ -48,6 +48,7 @@ class Application < Sinatra::Base
                     :created_at => Time.now.to_s)
 
     status 200
+    content_type :json
     return {:status =>  "ok"}.to_json
   end
 
@@ -66,6 +67,7 @@ class Application < Sinatra::Base
                     :created_at => Time.now.to_s)
 
     status 200
+    content_type :json
     return {:status =>  "ok"}.to_json
   end
   
