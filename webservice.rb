@@ -15,7 +15,7 @@ username    = credentials["development"]["username"]
 password    = credentials["development"]["password"]
 hostname    = credentials["development"]["hostname"]
 
-DataMapper.setup(:default, 'mysql://#{username}:#{password}@#{hostname}/geofencing')
+DataMapper.setup(:default, "mysql://#{username}:#{password}@#{hostname}/geofencing")
 
 class Location
   include DataMapper::Resource
@@ -80,6 +80,19 @@ class Application < Sinatra::Base
     status 200
 
     return {:status =>  "ok"}.to_json
+  end
+
+  get '/locations' do
+    
+    locations = Location.all
+
+    status 200
+    return {:locations => locations}.to_json
+
+  end
+
+  get '/geofences' do
+
   end
   
 end
