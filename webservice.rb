@@ -25,6 +25,8 @@ class Location
   property :latitude, Float
   property :longitude, Float
   property :created_at, String
+
+  belongs_to :trip
 end
 
 class Geofence
@@ -36,12 +38,29 @@ class Geofence
   property :radius,    Integer
   property :event,     String
   property :created_at, String
+
+  belongs_to :trip
+end
+
+class Trip
+
+  include DataMapper::Resource
+
+  property :id,  Serial
+  property :trip_identifier, String
+  property :started_at, String
+  property :stopped_at, String
+
+  has n, :locations
+  has n, :geofences
+
 end
 
 DataMapper.finalize
 
 Location.auto_upgrade!
 Geofence.auto_upgrade!
+Trip.auto_upgrade!
 
 class Application < Sinatra::Base
 
@@ -52,12 +71,17 @@ class Application < Sinatra::Base
   post '/location' do
     latitude   = params[:latitude]
     longitude  = params[:longitude]
+    trip_identifier = params[:trip_identifier]
     
     $logger.debug "Location #{latitude}, #{longitude} posted"
+
+    trip = Trip.get(trip_identifier)
     
-    Location.create(:latitude   => latitude,
-                    :longitude  => longitude,
-                    :created_at => Time.now.to_s)
+    location = Location.create(:latitude   => latitude,
+                               :longitude  => longitude,
+                               :created_at => Time.now.to_s)
+
+    trip.locations << location
 
     status 200
     return {:status =>  "ok"}.to_json
@@ -69,18 +93,37 @@ class Application < Sinatra::Base
     longitude  = params[:longitude]
     radius     = params[:radius]
     event      = params[:event]
+    trip_identifier = params[:trip_identifier]
     
     $logger.debug "#{event} geofence with center (#{latitude}, #{longitude}) radius #{radius}"
+
+    trip = Trip.get(trip_identifier)
     
-    Geofence.create(:latitude   => latitude,
-                    :longitude  => longitude,
-                    :radius     => radius,
-                    :event      => event,
-                    :created_at => Time.now.to_s)
+    geofence = Geofence.create(:latitude   => latitude,
+                               :longitude  => longitude,
+                               :radius     => radius,
+                               :event      => event,
+                               :created_at => Time.now.to_s)
+    
+    trip.geofences << geofence
 
     status 200
 
     return {:status =>  "ok"}.to_json
+  end
+
+  post '/trip' do
+
+    trip_identifier = params[:trip_identifier]    
+
+    $logger.debug "Creating new trip #{trip_identifier}"
+    
+    Trip.create(:trip_identifier => trip_identifier)
+
+    status 200
+
+    return {:status => "ok"}.to_json
+
   end
 
   get '/locations' do
