@@ -133,10 +133,10 @@ class Application < Sinatra::Base
     callback        = params[:callback]; # JSONP
     trip_identifier = params[:trip_identifier]
     
-    locations = Location.all
+    trip = Trip.first(:trip_identifier => trip_identifier)
 
     status 200
-    json = {:locations => locations}.to_json
+    json = {:locations => trip.locations}.to_json
 
     if callback
       return "#{callback}(#{json});"
