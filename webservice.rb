@@ -151,11 +151,14 @@ class Application < Sinatra::Base
   get '/geofences' do
 
     callback = params[:callback]; # JSONP
+    trip_identifier = params[:trip_identifier]
 
-    geofences = Geofence.all
+    $logger.debug "Get geolocations for trip #{trip_identifier}"
+
+    trip = Trip.first(:trip_identifier => trip_identifier)
 
     status 200
-    json = {:geofences => geofences}.to_json
+    json = {:geofences => trip.geofences}.to_json
 
     if callback
       return "#{callback}(#{json});"
