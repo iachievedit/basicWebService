@@ -133,7 +133,7 @@ class Application < Sinatra::Base
     callback        = params[:callback]; # JSONP
     trip_identifier = params[:trip_identifier]
 
-    puts trip_identifier
+    $logger.debug "Get locations for trip #{trip_identifier}"
     
     trip = Trip.first(:trip_identifier => trip_identifier)
 
