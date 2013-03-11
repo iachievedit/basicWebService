@@ -76,12 +76,13 @@ class Application < Sinatra::Base
     $logger.debug "Location #{latitude}, #{longitude} posted for trip #{trip_identifier}"
 
     trip = Trip.first(:trip_identifier => trip_identifier)
-    
+
     location = Location.create(:latitude   => latitude,
                                :longitude  => longitude,
                                :created_at => Time.now.to_s)
 
     trip.locations << location
+    trip.save!
 
     status 200
     return {:status =>  "ok"}.to_json
