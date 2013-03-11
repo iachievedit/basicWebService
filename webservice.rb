@@ -98,7 +98,7 @@ class Application < Sinatra::Base
     
     $logger.debug "#{event} geofence with center (#{latitude}, #{longitude}) radius #{radius}"
 
-    trip = Trip.get(trip_identifier)
+    trip = Trip.first(:trip_identifier => trip_identifier)
     
     geofence = Geofence.create(:latitude   => latitude,
                                :longitude  => longitude,
@@ -107,6 +107,7 @@ class Application < Sinatra::Base
                                :created_at => Time.now.to_s)
     
     trip.geofences << geofence
+    trip.save!
 
     status 200
 
@@ -129,7 +130,8 @@ class Application < Sinatra::Base
 
   get '/locations' do
 
-    callback = params[:callback]; # JSONP
+    callback        = params[:callback]; # JSONP
+    trip_identifier = params[:trip_identifier]
     
     locations = Location.all
 
