@@ -73,9 +73,9 @@ class Application < Sinatra::Base
     longitude  = params[:longitude]
     trip_identifier = params[:trip_identifier]
     
-    $logger.debug "Location #{latitude}, #{longitude} posted"
+    $logger.debug "Location #{latitude}, #{longitude} posted for trip #{trip_identifier}"
 
-    trip = Trip.get(trip_identifier)
+    trip = Trip.first(:trip_identifier => trip_identifier)
     
     location = Location.create(:latitude   => latitude,
                                :longitude  => longitude,
